@@ -11,7 +11,13 @@ import org.pentaho.di.trans.Trans;
 import org.pentaho.di.trans.TransMeta;
 import java.util.UUID;
 
-import org.apache.log4j.BasicConfigurator;
+
+
+//import org.apache.commons.cli.CommandLineParser;
+//import org.apache.commons.cli.BasicParser;
+//import org.apache.commons.cli.Options;
+//import org.apache.commons.cli.CommandLine;
+
 
 
 /**
@@ -32,18 +38,31 @@ public class App
 
         System.out.println("start!");
 
-//        Integer i = 10;
-//        while (i-->0){
-//            System.out.println("start------------------------");
-//            App.runKettleTransfer("/Users/fenghuacaijing/Documents/test_news.ktr");
-//            System.out.println("end one ----------");
-//        }
-//
+
+        // Create a Parser
+//        CommandLineParser parser = new BasicParser( );
+//        Options options = new Options( );
+//        options.addOption("h", "help", false, "Print this usage information");
+//        options.addOption("v", "verbose", false, "Print out VERBOSE information" );
+//        options.addOption("f", "file", true, "File to save program output to");
+        // Parse the program arguments
+//        CommandLine commandLine = parser.parse( options, args );
+
+        System.out.println("eeee");
+
+
+//        System.out.println("start------------------------");
+//        App.runKettleTransfer("/Users/fenghuacaijing/Documents/test_news.ktr");
+//        System.out.println("end one ----------");
+
+
         System.out.println("end");
     }
 
     public static boolean runKettleTransfer( String ktrFilePath) {
+
         Trans trans = null;
+
         String uuid = UUID.randomUUID().toString();
 
         logger_info.info("ExecKettleUtil@runKettleTransfer:"+uuid+" {ktrFilePath:"+ktrFilePath+"}");
