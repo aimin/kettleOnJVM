@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>jf</groupId>
+  <artifactId>kettle-test</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <name>kettle-test</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+
+
+    <slf4j.version>1.7.7</slf4j.version>
+    <log4j.version>1.2.17</log4j.version>
+
+    <kettle.version>8.1.0.0-365</kettle.version>
+  </properties>
+
+
+  <dependencies>
+
+    <!-- kettle ETL 相关 start -->
+    <dependency>
+      <groupId>pentaho-kettle</groupId>
+      <artifactId>kettle-core</artifactId>
+      <version>${kettle.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>pentaho-kettle</groupId>
+      <artifactId>kettle-engine</artifactId>
+      <version>${kettle.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>pentaho-kettle</groupId>
+      <artifactId>kettle-dbdialog</artifactId>
+      <version>${kettle.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>pentaho</groupId>
+      <artifactId>metastore</artifactId>
+      <version>${kettle.version}</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>com.verhas </groupId>
+      <artifactId>license3j </artifactId>
+      <version>1.0.7 </version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.safehaus.jug</groupId>
+      <artifactId>jug</artifactId>
+      <version>2.0.0</version>
+      <!-- the classifer is important!! -->
+      <classifier>lgpl</classifier>
+    </dependency>
+
+
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.41</version>
+    </dependency>
+    <!-- kettle ETL 相关 end -->
+
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>compile</scope>
+    </dependency>
+
+
+
+    <dependency>
+             <groupId>log4j</groupId>
+             <artifactId>log4j</artifactId>
+              <version>${log4j.version}</version>
+    </dependency>
+    <dependency>
+           <groupId>org.slf4j</groupId>
+           <artifactId>slf4j-api</artifactId>
+           <version>${slf4j.version}</version>
+     </dependency>
+     <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-log4j12</artifactId>
+           <version>${slf4j.version}</version>
+    </dependency>
+
+
+
+  </dependencies>
+
+
+  <!-- 配置远程仓库 -->
+  <repositories>
+    <repository>
+      <id>kettle</id>
+      <name>kettle Repository</name>
+      <url>https://nexus.pentaho.org/content/groups/omni/</url>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>daily</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+        <checksumPolicy>warn</checksumPolicy>
+      </snapshots>
+      <layout>default</layout>
+    </repository>
+  </repositories>
+
+  <build>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <skipTests>true</skipTests>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+              <transformers>
+                <transformer
+                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass zhushi="这里运行类！">jf.App</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+      <plugins>
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.7.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.20.1</version>
+        </plugin>
+
+
+
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.5.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+
+
+
+     <!--   <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.0.2</version>
+
+          <configuration>
+            <archive>
+              <manifest>
+                <addClasspath>true</addClasspath>
+                <classpathPrefix>/data/lib</classpathPrefix>
+                <mainClass>jf.App</mainClass>
+              </manifest>
+            </archive>
+          </configuration>
+
+        </plugin>-->
+
+
+
+
+        <!--&lt;!&ndash; 使用 maven-Assembly-plugin插件打可执行包&ndash;&gt;-->
+        <!--<plugin>-->
+          <!--<groupId>org.apache.maven.plugins</groupId>-->
+          <!--<artifactId>maven-assembly-plugin</artifactId>-->
+          <!--<version>2.6</version>-->
+          <!--<configuration>-->
+            <!--&lt;!&ndash; get all project dependencies &ndash;&gt;-->
+            <!--<descriptorRefs>-->
+              <!--<descriptorRef>jar-with-dependencies</descriptorRef>-->
+            <!--</descriptorRefs>-->
+            <!--&lt;!&ndash; MainClass in mainfest make a executable jar &ndash;&gt;-->
+            <!--<archive>-->
+              <!--<manifest>-->
+                <!--<mainClass>jf.App</mainClass>-->
+              <!--</manifest>-->
+            <!--</archive>-->
+          <!--</configuration>-->
+          <!--<executions>-->
+            <!--<execution>-->
+              <!--<id>make-assembly</id>-->
+              <!--<phase>package</phase>-->
+              <!--<goals>-->
+                <!--<goal>single</goal>-->
+              <!--</goals>-->
+            <!--</execution>-->
+          <!--</executions>-->
+        <!--</plugin>-->
+
+
+        <!-- 使用 maven-shade-plugin插件打可执行包-->
+              <!--  <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-shade-plugin</artifactId>
+                  <version>2.3</version>
+                  <configuration>
+                    <skipTests>true</skipTests>
+                  </configuration>
+                  <executions>
+                    <execution>
+                      <phase>package</phase>
+                      <goals>
+                        <goal>shade</goal>
+                      </goals>
+                      <configuration>
+                        <filters>
+                          <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                              <exclude>META-INF/*.SF</exclude>
+                              <exclude>META-INF/*.DSA</exclude>
+                              <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                          </filter>
+                        </filters>
+                        <transformers>
+                          <transformer
+                                  implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <mainClass zhushi="这里运行类！">jf.App</mainClass>
+                          </transformer>
+                        </transformers>
+                      </configuration>
+                    </execution>
+                  </executions>
+                </plugin>-->
+
+
+
+      </plugins>
+    </pluginManagement>
+  </build>
+
+
+
+
+</project>
